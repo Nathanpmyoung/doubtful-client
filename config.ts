@@ -1,6 +1,6 @@
 const configs = {
     development: {
-        apiUrl: 'https://doubtful.herokuapp.com',
+        apiUrl: 'https://api.doubtful.app',
         origin: 'https://doubtful.app/api',
     },
     test: {

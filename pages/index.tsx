@@ -5,6 +5,7 @@ import { Question } from "../interfaces";
 import styles from "../styles/Home/styles.module.css";
 import { withIronSessionSsr } from "iron-session/next";
 import { ironConfig } from "./api/_utils/ironConfig";
+import { useRouter } from "next/router";
 
 interface HomeProps {
   user: any;
@@ -34,6 +35,10 @@ export const getServerSideProps = withIronSessionSsr(
 );
 
 const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
+  const router = useRouter();
+  if (user && !user.name) {
+    router.push("/profile");
+  }
   return (
     <div className={styles.container}>
       <Head>

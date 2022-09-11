@@ -26,6 +26,21 @@
     border: 2px solid #AC6DC9;
 }
 
+.titleInput {
+    padding: 8px;
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.17);
+    border-radius: 4px;
+    transition: 0.2s;
+    background: white;
+    color: black;
+    outline: none;
+}
+
+.titleInput:focus {
+    border: 2px solid #AC6DC9;
+}
+
 .formGroup {
     margin-bottom: 32px;
 }

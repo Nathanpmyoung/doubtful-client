@@ -79,10 +79,13 @@ export const QuestionEditor = ({
 
   const socket = useMemo(() => {
     if (isBrowser) {
-      const socket = io(`ws://${config.apiUrl.split("://")[1]}`, {
-        transports: ["websocket"],
-        query: { version: 0 },
-      });
+      const socket = io(
+        `${config.apiUrl.replace("http", "ws").split("://")[1]}`,
+        {
+          transports: ["websocket"],
+          query: { version: 0 },
+        }
+      );
 
       return socket;
     }

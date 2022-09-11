@@ -1,0 +1,55 @@
+.label {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0.03em;
+    color: rgba(0, 0, 0, 0.58);
+    margin-bottom: 8px;
+    display: block;
+}
+
+
+.titleInput {
+    padding: 8px;
+    width: 100%;
+    height: 44px;
+    border: 2px solid rgba(0, 0, 0, 0.17);
+    border-radius: 4px;
+    transition: 0.2s;
+    background: white;
+    color: black;
+    outline: none;
+    font-size: 28px;
+}
+
+.titleInput:focus {
+    border: 2px solid #AC6DC9;
+}
+
+.formGroup {
+    margin-bottom: 32px;
+}
+
+.pillButton {
+    padding: 4px 12px;
+    height: 28px;
+    border: 1px solid rgba(0, 0, 0, 0.17);
+    border-radius: 19px;
+    transition: 0.2s;
+    background: none;
+    color: #8945A1;
+    margin-right: 8px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+.pillButton:disabled {
+    color: lightgray;
+    cursor: not-allowed;
+}
+
+.activePillButton {
+    background: #8945A1;
+    border: 1px solid rgba(0, 0, 0, 0.17);
+    color: white;
+}

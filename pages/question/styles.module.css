@@ -1,0 +1,72 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.questionContainer {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+    max-width: 700px;
+}
+
+.questionBody {
+    position: relative;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    box-shadow: 0px 4px 20px -9px #181526;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    color: black;
+    padding: 32px 44px;
+    flex-grow: 1;
+}
+
+.makeSuggestionWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.makeSuggestion {
+    text-align: right;
+    border-radius: 11px;
+    background: rgba(137, 69, 161, 0.12);
+    backdrop-filter: blur(20px);
+    gap: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #8945A1;
+
+    margin-right: -40px;
+    margin-top: -28px;
+    padding: 2px;
+}
+
+.makeSuggestion :global(span) {
+    padding: 12px 12px 16px 16px;
+}
+
+.makeSuggestionButton {
+    background: #8945A1;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+}

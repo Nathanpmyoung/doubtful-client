@@ -1,0 +1,46 @@
+.editorContainer {
+  position: relative;
+  transition: 0.3s;
+
+  border-radius: 2px;
+  padding: 4px 11px;
+  line-height: 1.5715;
+  color: inherit;
+  width: 100%;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: inherit;
+}
+
+.editorWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.editorWrapper :global(.ProseMirror) {
+  position: relative;
+  outline: none;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: break-spaces;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0;
+}
+
+.editorWrapper :global(p) {
+  margin: 2px 0;
+}
+
+.sendButton {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 83px;
+  border: none;
+}

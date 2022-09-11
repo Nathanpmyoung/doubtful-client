@@ -1,0 +1,302 @@
+// import Icon, {
+//   BoldOutlined,
+//   CodeOutlined,
+//   ItalicOutlined,
+//   OrderedListOutlined,
+//   UnorderedListOutlined,
+// } from '@ant-design/icons';
+// import { Dropdown, Menu, Tooltip } from 'antd';
+// import { toggleMark, setBlockType } from 'prosemirror-commands';
+// import { EditorState } from 'prosemirror-state';
+// import { setTextSelection } from 'prosemirror-utils';
+// import { EditorView } from 'prosemirror-view';
+// import { useMemo } from 'react';
+// import styled from 'styled-components';
+
+// import THEME from '../../styles/variables';
+// import { KeyboardShortcut } from '../KeyboardShortcut/KeyboardShortcut';
+// import { toggleList } from './Editor/lib/commands/toggleList';
+// import { toggleWrap } from './Editor/lib/commands/toggleWrap';
+// import { isMarkActive } from './Editor/lib/queries/isMarkActive';
+// import { isNodeActive } from './Editor/lib/queries/isNodeActive';
+
+// interface Item {
+//   name: string;
+//   tooltip: string;
+//   icon: JSX.Element | ((active: boolean) => JSX.Element);
+//   kind?: 'node' | 'mark';
+//   attrs?: any;
+//   shouldShow?(view: EditorView): boolean;
+//   isActive?(state: EditorState): boolean;
+//   isDisabled?(state: EditorState): boolean;
+//   action?(view: EditorView): (state: EditorState, dispatch: any) => void;
+// }
+
+// interface Group {
+//   kind: 'group';
+//   tooltip: string;
+//   icon: JSX.Element;
+//   items: Item[];
+//   shouldShow?(view: EditorView): boolean;
+// }
+
+// type MenuItem = Item | Group;
+
+// const makeMenuItems = (): MenuItem[] => {
+//   return [
+//     {
+//       name: 'mention',
+//       tooltip: 'Mention',
+//       icon: <Icon component={() => <span>@</span>} />,
+//       shouldShow(view) {
+//         return view.state.plugins.some(
+//           (p: any) => p.props.name === 'mentionMenu',
+//         );
+//       },
+//       isActive() {
+//         return false;
+//       },
+//       action(view: EditorView) {
+//         return (state: EditorState, dispatch: any) => {
+//           dispatch(state.tr.insertText('@'));
+//           view.focus();
+//         };
+//       },
+//     },
+//     {
+//       name: 'strong',
+//       tooltip: 'Bold',
+//       icon: <BoldOutlined />,
+//       kind: 'mark',
+//     },
+//     {
+//       name: 'italic',
+//       tooltip: 'Italic',
+//       icon: <ItalicOutlined />,
+//       kind: 'mark',
+//     },
+//     {
+//       name: 'ordered_list',
+//       tooltip: 'Ordered List',
+//       icon: <OrderedListOutlined />,
+//       kind: 'node',
+//       action(view: EditorView) {
+//         return (state: EditorState, dispatch: any) => {
+//           const { schema } = state;
+//           const type = schema.nodes.ordered_list;
+//           toggleList(type, schema.nodes.list_item)(state, dispatch);
+//           view.focus();
+//         };
+//       },
+//     },
+//     {
+//       name: 'bullet_list',
+//       tooltip: 'Bullet List',
+//       icon: <UnorderedListOutlined />,
+//       kind: 'node',
+//       action(view: EditorView) {
+//         view.focus();
+//         const { schema } = view.state;
+//         const type = schema.nodes.bullet_list;
+
+//         return toggleList(type, schema.nodes.list_item);
+//       },
+//     },
+//     {
+//       name: 'code_block',
+//       tooltip: 'Code',
+//       icon: <CodeOutlined />,
+//       kind: 'node',
+//       action(view: EditorView) {
+//         const type = view.state.schema.nodes.code_block;
+//         view.focus();
+
+//         return setBlockType(type);
+//       },
+//     },
+//     {
+//       kind: 'group',
+//       tooltip: '',
+//       icon: <Icon component={() => <span>...</span>} />,
+//       items: [
+//         {
+//           name: 'strikethrough',
+//           kind: 'mark',
+//           tooltip: 'Strikethrough',
+//           icon: <KeyboardShortcut keys={['Mod', 'd']} />,
+//         },
+//         {
+//           name: 'code_inline',
+//           kind: 'mark',
+//           tooltip: 'Code snippet',
+//           icon: <KeyboardShortcut keys={['``']} />,
+//         },
+//         {
+//           name: 'blockquote',
+//           kind: 'node',
+//           tooltip: 'Quote',
+//           icon: <KeyboardShortcut keys={['>']} />,
+//         },
+//         {
+//           name: 'link',
+//           kind: 'mark',
+//           tooltip: 'Link',
+//           icon: <KeyboardShortcut keys={['Mod', 'k']} />,
+//           isDisabled(state) {
+//             const { selection } = state;
+
+//             return selection.from === selection.to;
+//           },
+//           action(view) {
+//             return (state: EditorState, dispatch: any) => {
+//               const type = state.schema.marks.link;
+//               view.focus();
+//               toggleMark(type, { href: '' })(state, (tr) => {
+//                 dispatch(setTextSelection(state.selection.$to.pos - 1)(tr));
+//               });
+//             };
+//           },
+//         },
+//         {
+//           name: 'image',
+//           kind: 'node',
+//           tooltip: 'Image',
+//           icon: <KeyboardShortcut keys={['Mod', 'm']} />,
+//           action() {
+//             return (state: EditorState, dispatch: any) => {
+//               const { selection, schema } = state;
+//               const type = schema.nodes.image;
+//               const node = type.create({ src: '' });
+//               const transaction = state.tr.insert(selection.from, node);
+//               dispatch(transaction);
+
+//               return true;
+//             };
+//           },
+//         },
+//       ],
+//     },
+//   ];
+// };
+
+// const isToolbarItemActive = (view: EditorView, it: Item) => {
+//   const type = it.kind ? view.state.schema[`${it.kind}s`][it.name] : null;
+
+//   if (!it.kind && !it.isActive) {
+//     return false;
+//   }
+
+//   if (it.isActive) {
+//     return it.isActive(view.state);
+//   }
+
+//   if (it.kind === 'mark') {
+//     return isMarkActive(type)(view.state);
+//   }
+
+//   return isNodeActive(type)(view.state);
+// };
+
+// const handleToolbarClick = (view: EditorView, it: Item) => {
+//   if (it.action) {
+//     it.action(view)(view.state, view.dispatch);
+//   } else {
+//     const type = it.kind ? view.state.schema[`${it.kind}s`][it.name] : null;
+//     const toggleFn = it.kind === 'mark' ? toggleMark : toggleWrap;
+//     toggleFn(type, it.attrs)(view.state, view.dispatch);
+//     view.focus();
+//   }
+// };
+
+// const renderGroupItem = (view: EditorView, it: Item) => {
+//   const isDisabled = !view || (it.isDisabled && it.isDisabled(view.state));
+//   const isActive = isToolbarItemActive(view, it);
+//   const icon = typeof it.icon === 'function' ? it.icon(isActive) : it.icon;
+
+//   return (
+//     <Menu.Item
+//       key={it.tooltip}
+//       disabled={isDisabled}
+//       onClick={() => handleToolbarClick(view, it)}
+//     >
+//       {it.tooltip}
+//       {icon}
+//     </Menu.Item>
+//   );
+// };
+
+// const renderToolbarItem = (view: EditorView, it: MenuItem) => {
+//   if (it.kind === 'group') {
+//     return (
+//       <Dropdown
+//         key={it.tooltip}
+//         placement="topCenter"
+//         trigger={['click']}
+//         overlay={
+//           <Menu>{it.items.map((gIt) => renderGroupItem(view, gIt))}</Menu>
+//         }
+//       >
+//         <Tooltip title={it.tooltip}>
+//           <ToolbarButton isActive={false} tabIndex={-1}>
+//             {it.icon}
+//           </ToolbarButton>
+//         </Tooltip>
+//       </Dropdown>
+//     );
+//   }
+//   const isDisabled = !view || (it.isDisabled && it.isDisabled(view.state));
+//   const isActive = isToolbarItemActive(view, it);
+//   const icon = typeof it.icon === 'function' ? it.icon(isActive) : it.icon;
+
+//   return (
+//     <Tooltip key={it.tooltip} title={it.tooltip}>
+//       <ToolbarButton
+//         isActive={isActive}
+//         tabIndex={-1}
+//         disabled={isDisabled}
+//         onClick={() => handleToolbarClick(view, it)}
+//       >
+//         {icon}
+//       </ToolbarButton>
+//     </Tooltip>
+//   );
+// };
+
+// export const FormattingMenu = ({
+//   view,
+// }: {
+//   view?: EditorView;
+//   triggerUpdate: number;
+// }) => {
+//   const menuItems = useMemo(() => (view ? makeMenuItems() : []), [view]);
+
+//   return (
+//     <div>
+//       {view
+//         ? menuItems
+//             .filter((it) => !it.shouldShow || it.shouldShow(view))
+//             .map((it) => renderToolbarItem(view, it))
+//         : null}
+//     </div>
+//   );
+// };
+
+// const ToolbarButton = styled.button<{
+//   isActive: boolean;
+// }>`
+//   outline: none;
+//   padding: 2px;
+//   border: 0;
+//   background: 0;
+//   margin-right: 12px;
+//   width: 18px;
+//   height: 18px;
+//   cursor: pointer;
+//   border-radius: 2px;
+//   background: ${({ isActive }) => (isActive ? THEME.primaryColor : 'none')};
+//   color: ${({ isActive }) => (isActive ? 'white' : 'inherit')};
+//   vertical-align: middle;
+//   span {
+//     vertical-align: top;
+//   }
+// `;

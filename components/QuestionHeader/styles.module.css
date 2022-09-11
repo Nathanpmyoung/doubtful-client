@@ -1,0 +1,31 @@
+.questionHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 16px;
+}
+
+.questionTitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.questionSubtitle {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.58);
+}
+
+.shareButton {
+    padding: 8px 12px;
+    gap: 6px;
+    height: 37px;
+    background: linear-gradient(93.74deg, #622F5B 9.47%, #7C3E97 100%);
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}

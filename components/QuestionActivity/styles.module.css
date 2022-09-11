@@ -1,0 +1,126 @@
+.questionComment {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.avatarWrapper {
+    padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 22px;
+}
+
+.commentBody {
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.16);
+    border-radius: 6px;
+    align-items: flex-start;
+    font-size: 13px;
+    padding: 8px 12px;
+    gap: 8px;
+    width: 100%;
+}
+
+.questionActivityContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* overflow-y: auto; */
+}
+
+.commentControl {
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.commentControlInner {
+    display: flex;
+    flex-direction: row;
+}
+
+.commentControlInner :global(.editorContainer) {
+    box-shadow: 0 0 0 2px rgb(49 66 153 / 20%);
+}
+
+.commentControlInner :global(img) {
+    width: 32px;
+    margin: 8px;
+    margin-right: 0;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.actorName {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.58);
+    margin-right: 8px;
+}
+
+.activityTime {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.58);
+}
+
+.replyButton {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.58);
+    margin-top: 8px;
+}
+
+.replyTo {
+    font-size: 12px;
+    padding: 6px 8px 6px 16px;
+    background: rgba(0, 0, 0, 0.07);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.replyToActorName {
+    font-weight: 500;
+    line-height: 150%;
+    color: #AC6DC9;
+}
+
+.cancelReplyTo {
+    background: none;
+    border: none;
+}
+
+.relatedActivity {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.relatedActivityGlyph {
+    border-width: 2px 0px 0px 2px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.4);
+    border-radius: 8px 0px 0px 0px;
+    width: 16px;
+    height: 11px;
+    margin-right: 10px;
+}
+
+.relatedActivityContent {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.58);
+}

@@ -1,0 +1,91 @@
+.nav {
+    height: 100%;
+    width: 265px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.whatsApp {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin: 16px;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.58);
+}
+
+.whatsApp a {
+    text-decoration: underline;
+}
+
+.newQuestionButton {
+    display: inline-block;
+    background: linear-gradient(93.74deg, rgba(131, 48, 107, 0.6) 9.47%, rgba(178, 75, 214, 0.6) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 8px 24px 8px 16px;
+    gap: 8px;
+    height: 44px;
+    margin: 8px 12px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 26px;
+    color: #FFFFFF;
+}
+
+.links {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: 9px;
+}
+
+.links :global(a) {
+    border-radius: 0px 100px 100px 0px;
+    padding: 8px 12px;
+    padding-left: 24px;
+    width: 100%;
+    display: block;
+}
+
+.links :global(a:hover) {
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.navHeader {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 150%;
+    color: rgba(255, 255, 255, 0.58);
+    margin-left: 16px;
+}
+
+.navTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+
+    margin: 22px;
+    margin-bottom: 16px;
+}
+
+.tmpLogo {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.5);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}

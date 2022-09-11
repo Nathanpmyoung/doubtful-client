@@ -6,6 +6,9 @@ const nextConfig = {
   webpack(config) {
     config.resolve.alias.yjs = 'node_modules/yjs'
     return config;
+  },
+  eslint: {
+    ignoreDuringBuilds: true
   }
 }
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Question } from "../../interfaces";
 import styles from "./styles.module.css";
 
@@ -13,20 +14,22 @@ export const LeftNav = ({ user }: LeftNavProps): JSX.Element => {
           <span className={styles.tmpLogo}></span> <span>Doubtful.</span>
         </div>
         <div>
-          <a href="/question/new" className={styles.newQuestionButton}>
+          <Link href="/question/new" className={styles.newQuestionButton}>
             + New Question
-          </a>
+          </Link>
         </div>
         <div className={styles.links}>
-          <a href="/">Questions</a>
+          <Link href="/">Questions</Link>
         </div>
         <div>
           <h4 className={styles.navHeader}>Participating</h4>
           <ul>
             {user.participating?.map((question: Question) => {
               return (
-                <li>
-                  <a href={`/question/${question.slug}`}>{question.title}</a>
+                <li key={question.id}>
+                  <Link href={`/question/${question.slug}`}>
+                    {question.title}
+                  </Link>
                 </li>
               );
             })}
@@ -48,12 +51,12 @@ export const LeftNav = ({ user }: LeftNavProps): JSX.Element => {
       <section className={styles.whatsApp}>
         Make this platform better
         <br />
-        <a
+        <Link
           href="https://chat.whatsapp.com/JeEluh0Czpf3JPu6GPhINx"
           target="_blank"
         >
           Join our WhatsApp group
-        </a>
+        </Link>
       </section>
     </nav>
   );

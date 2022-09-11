@@ -41,6 +41,7 @@ export const MultiChoiceQuestionFormPart = ({
       {config.options.map((option) => {
         return (
           <PillButton
+            key={option.label}
             onClick={() => {
               onChange(option.value);
             }}

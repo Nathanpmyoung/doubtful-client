@@ -98,7 +98,7 @@ export const LinkMenuComponent = ({ view }: { view: EditorView }) => {
 
   return (
     <>
-      <div left={leftPos} top={top} onSubmit={onUpdateUrl}>
+      <div style={{ left: leftPos, top }} onSubmit={onUpdateUrl}>
         {editMode ? (
           <input
             placeholder="Enter url..."
@@ -128,24 +128,24 @@ export const LinkMenuComponent = ({ view }: { view: EditorView }) => {
         )}
         <div>
           {editMode ? (
-              <button type='submit'>Save</button>
+            <button type="submit">Save</button>
           ) : (
-              <button
-                data-testid="confirm"
-                tabIndex={-1}
-                onClick={(ev) => {
-                  ev.stopPropagation();
-                  ev.preventDefault();
-                  setIsEditing(true);
-                }}
-              >Edit</button>
-          )}
-
             <button
               data-testid="confirm"
               tabIndex={-1}
-              onClick={removeLink}
-            >Delete</button>
+              onClick={(ev) => {
+                ev.stopPropagation();
+                ev.preventDefault();
+                setIsEditing(true);
+              }}
+            >
+              Edit
+            </button>
+          )}
+
+          <button data-testid="confirm" tabIndex={-1} onClick={removeLink}>
+            Delete
+          </button>
         </div>
       </div>
     </>

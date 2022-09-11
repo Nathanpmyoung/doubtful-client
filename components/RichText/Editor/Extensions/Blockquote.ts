@@ -16,7 +16,7 @@ export class Blockquote extends PMExtension {
           parseDOM: [{ tag: 'blockquote' }],
           toDOM: () => ['blockquote', 0],
           toMarkdown(state: MarkdownSerializerState, node: any) {
-            state.wrapBlock('> ', undefined, node, () =>
+            state.wrapBlock('> ', null, node, () =>
               state.renderContent(node),
             );
           },

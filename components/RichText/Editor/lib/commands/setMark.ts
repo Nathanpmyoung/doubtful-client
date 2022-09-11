@@ -1,16 +1,18 @@
-import { Mark, Schema } from 'prosemirror-model';
-import { EditorState, SelectionRange, Transaction } from 'prosemirror-state';
+import { Mark, Schema } from "prosemirror-model";
+import { EditorState, SelectionRange, Transaction } from "prosemirror-state";
 
-import { getMarkRange } from '../queries/getMarkRange';
-import { markApplies } from '../queries/markApplies';
+import { getMarkRange } from "../queries/getMarkRange";
+import { markApplies } from "../queries/markApplies";
 
 export function setMark<S extends Schema = any>(
-  markType: Mark<S>,
-  attrs?: { [key: string]: any },
+  markType: any,
+  // markType: Mark<S>,
+  attrs?: { [key: string]: any }
 ) {
   return function _setMark(
     state: EditorState,
-    dispatch: (tr: Transaction<S>) => void,
+    dispatch: (tr: any) => void
+    // dispatch: (tr: Transaction<S>) => void,
   ) {
     const { empty, $cursor } = state.selection as any;
     let { ranges } = state.selection;
@@ -25,7 +27,7 @@ export function setMark<S extends Schema = any>(
             {
               $from: { pos: range.from },
               $to: { pos: range.to },
-            } as SelectionRange<any>,
+            } as SelectionRange,
           ];
         } else {
           return false;

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Question } from "../../interfaces";
-import styles from "./styles.module.css";
+import styles from "../../components/QuestionPage/styles.module.css";
 import { QuestionRightPane } from "../../components/QuestionRightPane/QuestionRightPane";
 import { QuestionHeader } from "../../components/QuestionHeader/QuestionHeader";
 import { withIronSessionSsr } from "iron-session/next";
@@ -51,7 +51,7 @@ export const NewQuestionPage: NextPage<QuestionProps> = ({
           <section className={styles.questionBody}>
             <div className={styles.makeSuggestionWrapper}>
               <div className={styles.makeSuggestion}>
-                <span>Once you're ready</span>
+                <span>Once you{"'"}re ready</span>
                 <button
                   className={styles.makeSuggestionButton}
                   disabled={!canPublish || isPublishPending}

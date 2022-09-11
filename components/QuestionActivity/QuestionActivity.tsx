@@ -42,6 +42,7 @@ export const QuestionActivity = ({
           if (activity.type === "comment") {
             return (
               <QuestionComment
+                key={activity.id}
                 setReplyTo={setReplyToId}
                 activity={activity}
                 question={question}
@@ -51,6 +52,7 @@ export const QuestionActivity = ({
           } else if (activity.type === "branch") {
             return (
               <QuestionBranchActivity
+                key={activity.id}
                 activity={activity}
                 question={question}
                 user={user}

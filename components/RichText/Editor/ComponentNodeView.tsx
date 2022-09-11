@@ -1,13 +1,14 @@
-import { Node } from 'prosemirror-model';
-import { EditorView, Decoration, NodeView } from 'prosemirror-view';
-import * as React from 'react';
-import ReactDOM from 'react-dom';
+import { Node } from "prosemirror-model";
+import { EditorView, Decoration, NodeView } from "prosemirror-view";
+import * as React from "react";
+import ReactDOM from "react-dom";
 
 interface ComponentViewProps {
   node: Node;
   view: EditorView;
   getPos: () => number;
-  decorations: Decoration<{ [key: string]: any }>[];
+  decorations: any[];
+  // decorations: Decoration<{ [key: string]: any }>[];
 }
 
 interface ComponentProps {
@@ -42,28 +43,29 @@ export class ComponentNodeView implements NodeView {
 
   getPos: () => number;
 
-  decorations: Decoration<{ [key: string]: any }>[];
+  decorations: any[];
+  // decorations: Decoration<{ [key: string]: any }>[];
 
   isSelected = false;
 
-  dom: HTMLElement | null;
+  dom: HTMLElement;
 
   reactEl?: ComponentHarness | void;
 
   // See https://prosemirror.net/docs/ref/#view.NodeView
   constructor(
     component: NodeComponent,
-    { node, view, getPos, decorations }: ComponentViewProps,
+    { node, view, getPos, decorations }: ComponentViewProps
   ) {
     this.component = component;
     this.getPos = getPos;
     this.decorations = decorations;
     this.node = node;
     this.view = view;
-    this.dom = null;
+    // this.dom = null;
     this.dom = node.isInline
-      ? document.createElement('span')
-      : document.createElement('div');
+      ? document.createElement("span")
+      : document.createElement("div");
 
     this.renderElement();
   }
@@ -80,7 +82,7 @@ export class ComponentNodeView implements NodeView {
           isEditable={this.view.editable}
           getPos={this.getPos}
         />,
-        this.dom,
+        this.dom
       );
     } else {
       this.reactEl.setState({
@@ -122,7 +124,7 @@ export class ComponentNodeView implements NodeView {
     if (this.dom) {
       ReactDOM.unmountComponentAtNode(this.dom);
     }
-    this.dom = null;
+    this.dom = document.createElement("div");
   }
 
   ignoreMutation() {

@@ -6,7 +6,6 @@ import { BulletList } from "./Editor/Extensions/BulletList";
 import { Doc } from "./Editor/Extensions/Doc";
 import { HardBreak } from "./Editor/Extensions/HardBreak";
 import { History } from "./Editor/Extensions/History";
-import { Image } from "./Editor/Extensions/Image/Image";
 import { InlineCode } from "./Editor/Extensions/InlineCode";
 import { Italic } from "./Editor/Extensions/Italic";
 import { Keys } from "./Editor/Extensions/Keys";

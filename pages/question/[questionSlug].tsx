@@ -1,6 +1,6 @@
 import { config } from "../../config";
 import { ironConfig } from "../api/_utils/ironConfig";
-import { QuestionPage } from "./_QuestionPage";
+import { QuestionPage } from "../../components/QuestionPage/QuestionPage";
 import { withIronSessionSsr } from "iron-session/next";
 
 export const getServerSideProps = withIronSessionSsr(async function ({

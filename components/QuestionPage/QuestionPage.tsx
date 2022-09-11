@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Question } from "../../interfaces";
-import { QuestionEditor } from "../../components/QuestionEditor";
+import { QuestionEditor } from "../QuestionEditor";
 import styles from "./styles.module.css";
 import { api } from "../../lib/http";
-import { QuestionRightPane } from "../../components/QuestionRightPane/QuestionRightPane";
-import { QuestionHeader } from "../../components/QuestionHeader/QuestionHeader";
+import { QuestionRightPane } from "../QuestionRightPane/QuestionRightPane";
+import { QuestionHeader } from "../QuestionHeader/QuestionHeader";
 import { useState } from "react";
 import * as Y from "yjs";
 
@@ -98,3 +98,5 @@ export const QuestionPage: NextPage<QuestionProps> = ({
     </div>
   );
 };
+
+export default QuestionPage;

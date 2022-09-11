@@ -1,8 +1,8 @@
-import markdownIt from 'markdown-it';
-import { MarkdownParser, MarkdownSerializer } from 'prosemirror-markdown';
-import { Schema } from 'prosemirror-model';
+import markdownIt from "markdown-it";
+import { MarkdownParser, MarkdownSerializer } from "prosemirror-markdown";
+import { Schema } from "prosemirror-model";
 
-export const makeParser = (schema: Schema) => {
+export const makeParser = (schema: Schema): any => {
   const tokens = Object.entries(schema.nodes)
     .concat(Object.entries(schema.marks) as any)
     .reduce((acc, [key, attrs]) => {
@@ -14,7 +14,7 @@ export const makeParser = (schema: Schema) => {
       return {
         ...acc,
         [attrs.spec.markdownToken || key]:
-          typeof parse === 'function' ? parse() : parse,
+          typeof parse === "function" ? parse() : parse,
       };
     }, {});
 

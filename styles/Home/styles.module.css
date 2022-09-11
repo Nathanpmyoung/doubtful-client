@@ -61,6 +61,10 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.subTitle :global(a) {
+  text-decoration: underline;
+}
+
 .title,
 .description {
   text-align: center;

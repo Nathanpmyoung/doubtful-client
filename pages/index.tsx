@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { config } from "../config";
 import { Question } from "../interfaces";
-import styles from "./Home/styles.module.css";
+import styles from "../styles/Home/styles.module.css";
 import { withIronSessionSsr } from "iron-session/next";
 import { ironConfig } from "./api/_utils/ironConfig";
 

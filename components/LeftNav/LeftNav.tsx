@@ -14,9 +14,9 @@ export const LeftNav = ({ user }: LeftNavProps): JSX.Element => {
           <span className={styles.tmpLogo}></span> <span>Doubtful.</span>
         </div>
         <div>
-          <Link href="/question/new" className={styles.newQuestionButton}>
+          <a href="/question/new" className={styles.newQuestionButton}>
             + New Question
-          </Link>
+          </a>
         </div>
         <div className={styles.links}>
           <Link href="/">Questions</Link>

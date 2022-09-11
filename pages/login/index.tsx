@@ -2,9 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { config } from "../../config";
 import { api } from "../../lib/http";
-import styles from "../Home/styles.module.css";
+import styles from "../../styles/Home/styles.module.css";
 
 interface LoginProps {
   user: any;

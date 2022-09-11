@@ -1,7 +1,7 @@
 const configs = {
     development: {
-        apiUrl: 'http://localhost:3000',
-        origin: 'http://localhost:3001/api',
+        apiUrl: 'https://doubtful.herokuapp.com',
+        origin: 'https://doubtful.app/api',
     },
     test: {
         apiUrl: 'http://localhost:3000',

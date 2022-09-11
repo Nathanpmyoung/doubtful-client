@@ -7,6 +7,7 @@ import styles from "../styles/Home/styles.module.css";
 import { withIronSessionSsr } from "iron-session/next";
 import { ironConfig } from "./api/_utils/ironConfig";
 import { useRouter } from "next/router";
+import { api } from "../lib/http";
 
 interface HomeProps {
   user: any;
@@ -55,27 +56,68 @@ const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
         </h2>
 
         <section className={styles.questionsWrapper}>
-          {questions.map((question) => {
-            return (
-              <a
-                key={question.id}
-                href={`/question/${question.slug}`}
-                className={styles.question}
-              >
-                <h2 className={styles.questionTitle}>{question.title}</h2>
-                <small className={styles.questionSubTitle}>
-                  <img
-                    src={question.owner.avatarUrl}
-                    className={styles.questionOwnerImg}
-                  />
-                  {question.owner.name} · {question.activity.length} Comments ·{" "}
-                  {formatDistance(new Date(question.createdAt), new Date(), {
-                    addSuffix: true,
-                  })}
-                </small>
-              </a>
-            );
-          })}
+          {questions
+            .sort((a, b) => (a.score < b.score ? 1 : -1))
+            .map((question) => {
+              return (
+                <a
+                  key={question.id}
+                  href={`/question/${question.slug}`}
+                  className={styles.question}
+                >
+                  <div className={styles.rankBox}>
+                    <button
+                      onClick={async (ev) => {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        await api
+                          .url(`/question/${question.slug}/rank/up`)
+                          .post({});
+                        setTimeout(() => {
+                          location.reload();
+                        }, 100);
+                      }}
+                    >
+                      ⬆️
+                    </button>
+                    <span>{question.score}</span>
+                    <button
+                      onClick={async (ev) => {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        await api
+                          .url(`/question/${question.slug}/rank/down`)
+                          .post({})
+                          .json();
+                        setTimeout(() => {
+                          location.reload();
+                        }, 100);
+                      }}
+                    >
+                      ⬇️
+                    </button>
+                  </div>
+                  <div>
+                    <h2 className={styles.questionTitle}>{question.title}</h2>
+                    <small className={styles.questionSubTitle}>
+                      <img
+                        src={question.owner.avatarUrl}
+                        className={styles.questionOwnerImg}
+                      />
+                      {question.owner.name} · {question.activity.length}{" "}
+                      Comments ·{" "}
+                      {formatDistance(
+                        new Date(question.createdAt),
+                        new Date(),
+                        {
+                          addSuffix: true,
+                        }
+                      )}
+                    </small>
+                  </div>
+                </a>
+              );
+            })}
         </section>
       </main>
     </div>

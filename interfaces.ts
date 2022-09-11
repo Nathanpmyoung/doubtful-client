@@ -26,6 +26,7 @@ export interface Question {
   collaborationMode: string; // TODO: Enum
   title: string;
   content?: { id: string; content: { data: Buffer } };
+  score: number;
   owner: Profile;
   editors: Profile[];
   contributors: Profile[];

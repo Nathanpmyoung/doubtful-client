@@ -17,6 +17,7 @@ import { FormGroup } from "../../Form/FormGroup";
 export const RichTextQuestionFormPart = ({
   config,
   doc,
+  canEdit,
 }: QuestionFormPartProps): JSX.Element => {
   const [yType, setYType] = useState<Y.XmlFragment>();
 
@@ -34,10 +35,7 @@ export const RichTextQuestionFormPart = ({
       <Label label={config.label} name={config.label} />
       <div className={styles.richTextQuestionFormPartWrapper}>
         {awareness && yType ? (
-          <RichText
-            yType={yType}
-            awareness={awareness}
-          />
+          <RichText readOnly={!canEdit} yType={yType} awareness={awareness} />
         ) : null}
       </div>
     </FormGroup>

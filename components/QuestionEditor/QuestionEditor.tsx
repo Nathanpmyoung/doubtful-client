@@ -108,8 +108,7 @@ export const QuestionEditor = ({
           setIsConnected(false);
         },
       }));
-      const name = (localStorage.name =
-        localStorage.name || prompt("What is your name?"));
+      const name = user?.name;
       wave.user = {
         name,
         // avatar: profile.picture,
@@ -176,6 +175,7 @@ export const QuestionEditor = ({
         questionFormPartConfig.map((partConfig) => {
           return (
             <QuestionFormPart
+              canEdit={isOwner}
               doc={yDoc}
               config={partConfig}
               key={partConfig.yKey}

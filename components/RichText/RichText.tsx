@@ -30,6 +30,7 @@ const isDescendant = (parent: Element, child: Element) => {
 };
 
 interface RichTextProps {
+  value?: string;
   variant?: "comment" | "editor";
   border?: "always" | "never" | "active";
   placeholder?: string;
@@ -61,6 +62,7 @@ export const RichText: React.FC<RichTextProps> = ({
   onFocus,
   readOnly,
   variant,
+  value,
 }) => {
   const editorRef = useRef<HTMLDivElement>();
   const state = useRef<string>("");
@@ -134,6 +136,7 @@ export const RichText: React.FC<RichTextProps> = ({
         ref={(ref: HTMLDivElement) => (editorRef.current = ref)}
       >
         <Editor<string>
+          value={value}
           readOnly={readOnly}
           onInit={(_view) => {
             setView(_view);

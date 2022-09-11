@@ -44,6 +44,7 @@
     line-height: 20px;
     color: rgba(255, 255, 255, 0.8);
     margin-right: 9px;
+    overflow: hidden;
 }
 
 .links :global(a) {
@@ -52,6 +53,9 @@
     padding-left: 24px;
     width: 100%;
     display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .links :global(a:hover) {

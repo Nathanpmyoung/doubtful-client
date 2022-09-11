@@ -2,6 +2,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FormGroup } from "../../components/Form/FormGroup";
+import { Input } from "../../components/Form/Input";
+import { Label } from "../../components/Form/Label";
 import { api } from "../../lib/http";
 import styles from "../../styles/Home/styles.module.css";
 
@@ -52,7 +55,7 @@ const Home: NextPage<LoginProps> = ({ user }: LoginProps) => {
 
                   localStorage["doubtful:jwt"] = ret.access_token;
 
-                  router.push('/');
+                  router.push("/");
                 } else if (formEmail) {
                   await api
                     .url("/auth/login")
@@ -66,21 +69,36 @@ const Home: NextPage<LoginProps> = ({ user }: LoginProps) => {
             }}
           >
             {!email ? (
-              <>
-                <label>Email Address</label>
-                <input type="email" name="email" key="email" />
+              <FormGroup>
+                <Label label="Email Address" name="email" />
+                <Input
+                  key="email"
+                  name="email"
+                  onChange={() => {}}
+                  placeholder="joe@bloggs.com"
+                  disabled={false}
+                  defaultValue=""
+                />
+                <br />
                 <button type="submit" disabled={isPending}>
                   Send Code
                 </button>
-              </>
+              </FormGroup>
             ) : (
-              <>
-                <label>Code</label>
-                <input type="text" name="code" maxLength={6} key="code" />
+              <FormGroup>
+                <Label label="Code" name="code" />
+                <Input
+                  key="code"
+                  name="code"
+                  onChange={() => {}}
+                  placeholder="* * * * * *"
+                  disabled={false}
+                  defaultValue=""
+                />
                 <button type="submit" disabled={isPending}>
                   Sign Up / In
                 </button>
-              </>
+              </FormGroup>
             )}
           </form>
         </section>

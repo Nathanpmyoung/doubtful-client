@@ -7,7 +7,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   const user = (pageProps as any).user;
   return (
     <main className={styles.pageWrapper}>
-      {user ? <LeftNav user={user} /> : null}
+      {user ? (
+        <LeftNav user={user} />
+      ) : (
+        <a href="/login" className={styles.loginFloater}>Sign Up / Log In</a>
+      )}
       <Component {...pageProps} />
     </main>
   );

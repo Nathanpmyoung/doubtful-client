@@ -1,6 +1,6 @@
 .container {
   padding: 0 2rem;
-  width:100%;
+  width: 100%;
 }
 
 .main {
@@ -42,8 +42,23 @@
 
 .title {
   margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 100%;
+  /* identical to box height, or 32px */
+
+  letter-spacing: -0.005em;
+
+  /* text/ondark/strong */
+
+  color: #FFFFFF;
+}
+
+.subTitle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .title,
@@ -117,14 +132,59 @@
 }
 
 @media (prefers-color-scheme: dark) {
+
   .card,
   .footer {
     border-color: #222;
   }
+
   .code {
     background: #111;
   }
+
   .logo img {
     filter: invert(1);
   }
+}
+
+
+.questionsWrapper {
+  width: 90%;
+  max-width: 900px;
+  text-align: left;
+}
+
+.question {
+  display: block;
+  padding: 4px 16px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  padding: 8px 16px;
+}
+
+.questionTitle {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.questionSubTitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.58);
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+}
+
+.questionOwnerImg {
+  width: 20px;
+  border-radius: 50%;
+  margin-right: 4px;
 }

@@ -8,6 +8,7 @@ import { QuestionFormPartProps } from "./QuestionFormPart";
 export const DateQuestionFormPart = ({
   config,
   doc,
+  canEdit,
 }: QuestionFormPartProps): JSX.Element => {
   const [value, setValue] = useState<string>();
 
@@ -40,6 +41,7 @@ export const DateQuestionFormPart = ({
         onChange={onChange}
         name={config.label}
         placeholder="Pick Date"
+        disabled={!canEdit}
       />
     </FormGroup>
   );

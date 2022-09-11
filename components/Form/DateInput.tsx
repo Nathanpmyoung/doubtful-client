@@ -8,6 +8,7 @@ interface DateInputProps {
   placeholder: string;
   onChange(val: string): void;
   name: string;
+  disabled?: boolean;
 }
 
 export const DateInput = ({
@@ -15,17 +16,20 @@ export const DateInput = ({
   placeholder,
   onChange,
   name,
+  disabled,
 }: DateInputProps) => {
   const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null);
 
   return (
     <div style={{ position: "relative" }}>
       <PillButton
-        label={value ? format(new Date(value), "dd MMMM yyyy @ HH:mm") : placeholder}
+        label={
+          value ? format(new Date(value), "dd MMMM yyyy @ HH:mm") : placeholder
+        }
         onClick={() => {
           (inputRef as any)?.showPicker();
         }}
-        disabled={false}
+        disabled={!!disabled}
         isActive={!!value}
       />
       <input

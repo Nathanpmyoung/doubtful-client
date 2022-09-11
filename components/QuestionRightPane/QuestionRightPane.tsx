@@ -5,11 +5,13 @@ import styles from "./styles.module.css";
 interface QuestionRightPaneProps {
   user?: any;
   question?: Question;
+  refetch?(): void;
 }
 
 export const QuestionRightPane = ({
   question,
   user,
+  refetch,
 }: QuestionRightPaneProps): JSX.Element => {
   return (
     <main className={styles.rightPane}>
@@ -23,7 +25,7 @@ export const QuestionRightPane = ({
       <section className={styles.rightPaneDetail}>
         {/* TODO: show correct detail based on selected mode */}
         {question ? (
-          <QuestionActivity question={question} user={user} />
+          <QuestionActivity question={question} user={user} refetch={refetch} />
         ) : (
           <QuestionActivityEmptyState />
         )}

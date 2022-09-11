@@ -23,17 +23,20 @@ export const LeftNav = ({ user }: LeftNavProps): JSX.Element => {
         </div>
         <div>
           <h4 className={styles.navHeader}>Participating</h4>
-          <ul>
+          <div className={styles.links}>
+            <Link href="/">2022 Hottest Year on Record</Link>
+            <Link href="/">Second US Civil War Before 2030</Link>
+            <Link href="/">
+              Apple or Google to launch AR hardware product in 2023
+            </Link>
             {user.participating?.map((question: Question) => {
               return (
-                <li key={question.id}>
-                  <Link href={`/question/${question.slug}`}>
-                    {question.title}
-                  </Link>
-                </li>
+                <Link href={`/question/${question.slug}`}>
+                  {question.title}
+                </Link>
               );
             })}
-          </ul>
+          </div>
         </div>
         {/* <div>
           <h4>Published</h4>

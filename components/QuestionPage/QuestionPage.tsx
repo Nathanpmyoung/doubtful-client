@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import { api } from "../../lib/http";
 import { QuestionRightPane } from "../QuestionRightPane/QuestionRightPane";
 import { QuestionHeader } from "../QuestionHeader/QuestionHeader";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import * as Y from "yjs";
 
 export interface QuestionProps {
@@ -17,10 +17,19 @@ export interface QuestionProps {
 
 export const QuestionPage: NextPage<QuestionProps> = ({
   user,
-  question,
+  question: _question,
 }: QuestionProps) => {
+  const [question, setQuestion] = useState(_question);
   const [yDoc] = useState(new Y.Doc({ gc: false }));
   const router = useRouter();
+
+  const refetchQuestion = useCallback(async () => {
+    const q: Question = await api
+      .url(`/question/${question.slug}`)
+      .get()
+      .json();
+    setQuestion(q);
+  }, []);
 
   return (
     <div className={styles.pageContainer}>
@@ -93,7 +102,11 @@ export const QuestionPage: NextPage<QuestionProps> = ({
             </section>
           </section>
         </main>
-        <QuestionRightPane question={question} user={user} />
+        <QuestionRightPane
+          question={question}
+          user={user}
+          refetch={refetchQuestion}
+        />
       </div>
     </div>
   );

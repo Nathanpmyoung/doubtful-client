@@ -1,3 +1,4 @@
+import { EditorView } from "prosemirror-view";
 import { useCallback, useMemo, useState } from "react";
 import { Question } from "../../interfaces";
 import { api } from "../../lib/http";
@@ -9,27 +10,36 @@ import styles from "./styles.module.css";
 export interface QuestionActivityProps {
   question: Question;
   user: any;
+  refetch?(): void;
 }
 
 export const QuestionActivity = ({
   question,
   user,
+  refetch,
 }: QuestionActivityProps): JSX.Element => {
+  const [forceValue, setForceValue] = useState("");
   const [replyToId, setReplyToId] = useState<string>();
   const replyToActivity = useMemo(() => {
     if (replyToId) {
       return question.activity.find((activity) => activity.id === replyToId);
     }
-  }, [replyToId]);
+  }, [replyToId, question.activity]);
+
   const [isCommentPending, setIsCommentPending] = useState(false);
+
   const submitComment = useCallback(
-    ({ body, replyTo }: { body: string; replyTo?: string }) => {
-      return api.url(`/question/${question.slug}/comment`).post({
+    async ({ body, replyTo }: { body: string; replyTo?: string }) => {
+      await api.url(`/question/${question.slug}/comment`).post({
         content: { body },
         replyTo,
       });
+      // TODO: not this
+      setTimeout(() => {
+        refetch?.();
+      }, 100);
     },
-    []
+    [question.slug]
   );
 
   return (
@@ -87,12 +97,17 @@ export const QuestionActivity = ({
             <RichText
               variant="comment"
               readOnly={isCommentPending}
+              value={forceValue}
               onConfirm={async (commentText) => {
                 try {
                   setIsCommentPending(true);
                   await submitComment({
                     body: commentText,
                     replyTo: replyToId,
+                  });
+                  setForceValue(" ");
+                  setTimeout(() => {
+                    setForceValue("");
                   });
                   setReplyToId(undefined);
                 } finally {

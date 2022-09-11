@@ -27,6 +27,7 @@ export type QuestionFormPartConfig = GenericFormPartConfig | MultiChoiceConfig;
 export interface QuestionFormPartProps {
   doc: Y.Doc;
   config: QuestionFormPartConfig;
+  canEdit: boolean;
 }
 
 export const QuestionFormPart = (props: QuestionFormPartProps): JSX.Element => {
@@ -35,6 +36,7 @@ export const QuestionFormPart = (props: QuestionFormPartProps): JSX.Element => {
       <MultiChoiceQuestionFormPart
         doc={props.doc}
         config={props.config as MultiChoiceConfig}
+        canEdit={props.canEdit}
       />
     );
   } else if (props.config.type === "date") {

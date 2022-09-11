@@ -8,6 +8,7 @@ import { MultiChoiceConfig, QuestionFormPartProps } from "./QuestionFormPart";
 export const MultiChoiceQuestionFormPart = ({
   config,
   doc,
+  canEdit,
 }: QuestionFormPartProps & {
   config: MultiChoiceConfig;
 }): JSX.Element => {
@@ -46,7 +47,7 @@ export const MultiChoiceQuestionFormPart = ({
               onChange(option.value);
             }}
             label={option.label}
-            disabled={option.disabled}
+            disabled={option.disabled || !canEdit}
             isActive={option.value === value}
           />
         );

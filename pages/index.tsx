@@ -1,3 +1,4 @@
+import { formatDistance } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { config } from "../config";
@@ -48,17 +49,34 @@ const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Good Question? Doubtful.</h1>
+        <h1 className={styles.title}>Better questions ➡️ better forecasting</h1>
+        <h2 className={styles.subTitle}>
+          Help us craft better questions for the world’s forecasting platforms
+        </h2>
 
-        <ul>
+        <section className={styles.questionsWrapper}>
           {questions.map((question) => {
             return (
-              <li key={question.id}>
-                <a href={`/question/${question.slug}`}>{question.title}</a>
-              </li>
+              <a
+                key={question.id}
+                href={`/question/${question.slug}`}
+                className={styles.question}
+              >
+                <h2 className={styles.questionTitle}>{question.title}</h2>
+                <small className={styles.questionSubTitle}>
+                  <img
+                    src={question.owner.avatarUrl}
+                    className={styles.questionOwnerImg}
+                  />
+                  {question.owner.name} · {question.activity.length} Comments ·{" "}
+                  {formatDistance(new Date(question.createdAt), new Date(), {
+                    addSuffix: true,
+                  })}
+                </small>
+              </a>
             );
           })}
-        </ul>
+        </section>
       </main>
     </div>
   );

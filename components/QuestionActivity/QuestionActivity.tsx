@@ -19,7 +19,15 @@ export const QuestionActivity = ({
   refetch,
 }: QuestionActivityProps): JSX.Element => {
   const [forceValue, setForceValue] = useState("");
-  const [replyToId, setReplyToId] = useState<string>();
+  const [editorView, setEditorView] = useState<EditorView>();
+  const [replyToId, _setReplyToId] = useState<string>();
+  const setReplyToId = useCallback(
+    (id: string | undefined) => {
+      _setReplyToId(id);
+      editorView?.focus();
+    },
+    [editorView]
+  );
   const replyToActivity = useMemo(() => {
     if (replyToId) {
       return question.activity.find((activity) => activity.id === replyToId);
@@ -66,6 +74,7 @@ export const QuestionActivity = ({
                 activity={activity}
                 question={question}
                 user={user}
+                setReplyTo={setReplyToId}
                 refetch={refetch}
               />
             );
@@ -100,6 +109,7 @@ export const QuestionActivity = ({
               placeholder="Write a message..."
               readOnly={isCommentPending}
               value={forceValue}
+              onInit={setEditorView}
               onConfirm={async (commentText) => {
                 if (commentText) {
                   try {

@@ -7,6 +7,7 @@ export interface QuestionBranchActivityProps {
   question: Question;
   user: any;
   activity: QuestionActivity;
+  setReplyTo(id: string): void;
   refetch?(): void;
 }
 
@@ -14,12 +15,13 @@ export const QuestionBranchActivity = ({
   activity,
   question,
   refetch,
+  setReplyTo,
 }: QuestionBranchActivityProps): JSX.Element => {
   const { suggestion, accept } = activity.content.branch;
   if (suggestion) {
     const { summary, branchSlug } = suggestion;
     return (
-      <div className={styles.questionComment}>
+      <div className={styles.questionComment} id={`activity-${activity.id}`}>
         <div className={styles.avatarWrapper}>
           <img
             src={activity.actor.avatarUrl}
@@ -59,7 +61,7 @@ export const QuestionBranchActivity = ({
             href="#"
             onClick={(ev) => {
               ev.preventDefault();
-              // setReplyTo(activity.id);
+              setReplyTo(activity.id);
             }}
             className={styles.replyButton}
           >
@@ -91,7 +93,7 @@ export const QuestionBranchActivity = ({
             href="#"
             onClick={(ev) => {
               ev.preventDefault();
-              // setReplyTo(activity.id);
+              setReplyTo(activity.id);
             }}
             className={styles.replyButton}
           >

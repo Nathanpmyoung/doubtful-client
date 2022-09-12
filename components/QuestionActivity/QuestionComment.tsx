@@ -16,7 +16,7 @@ export const QuestionComment = ({
   setReplyTo,
 }: QuestionCommentProps): JSX.Element => {
   return (
-    <div className={styles.questionComment}>
+    <div className={styles.questionComment} id={`activity-${activity.id}`}>
       <div className={styles.avatarWrapper}>
         <img
           src={activity.actor.avatarUrl}
@@ -25,10 +25,19 @@ export const QuestionComment = ({
         />
       </div>
       <div style={{ width: "100%" }}>
-        {activity.relatedActivity ? <div className={styles.relatedActivity}>
-          <div className={styles.relatedActivityGlyph}></div>
-          <span className={styles.relatedActivityContent}>{activity.relatedActivity.content.body}</span>
-        </div> : null}
+        {activity.relatedActivity ? (
+          <a
+            className={styles.relatedActivity}
+            href={`#activity-${activity.relatedActivity.id}`}
+          >
+            <div className={styles.relatedActivityGlyph}></div>
+            <span className={styles.relatedActivityContent}>
+              {activity.relatedActivity.content.body
+                ? activity.relatedActivity.content.body
+                : 'an activity'}
+            </span>
+          </a>
+        ) : null}
         <span className={styles.actorName}>{activity.actor.name}</span>
         <span className={styles.activityTime}>
           {new Date(activity.createdAt).toLocaleTimeString()}

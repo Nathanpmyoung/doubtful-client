@@ -66,6 +66,7 @@ export const QuestionActivity = ({
                 activity={activity}
                 question={question}
                 user={user}
+                refetch={refetch}
               />
             );
           }

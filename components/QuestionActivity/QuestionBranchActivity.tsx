@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Question, QuestionActivity } from "../../interfaces";
 import { api } from "../../lib/http";
 import styles from "./styles.module.css";
@@ -6,11 +7,13 @@ export interface QuestionBranchActivityProps {
   question: Question;
   user: any;
   activity: QuestionActivity;
+  refetch?(): void;
 }
 
 export const QuestionBranchActivity = ({
   activity,
   question,
+  refetch,
 }: QuestionBranchActivityProps): JSX.Element => {
   const { suggestion, accept } = activity.content.branch;
   if (suggestion) {
@@ -35,16 +38,18 @@ export const QuestionBranchActivity = ({
             <strong>{summary}</strong>
             <br />
             <br />
-            <a href={`/question/${question.slug}/${branchSlug}`}>
+            <Link href={`/question/${question.slug}/${branchSlug}`}>
               View Changes
-            </a>{" "}
+            </Link>{" "}
             <button
               onClick={async () => {
                 await api
                   .url(`/question/${question.slug}/branch/${branchSlug}/accept`)
                   .post({})
                   .json();
-                //   window.location.reload();
+                setTimeout(() => {
+                  refetch?.();
+                }, 100);
               }}
             >
               Accept Changes

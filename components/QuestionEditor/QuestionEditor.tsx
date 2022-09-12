@@ -38,18 +38,21 @@ const questionFormPartConfig: QuestionFormPartConfig[] = [
     yKey: "resolutionText",
     label: "Resolution Criteria",
     type: "rich-text",
+    placeholder: "Add resolution criteria...",
   },
   {
     required: false,
     yKey: "backgroundText",
     label: "Background Text",
     type: "rich-text",
+    placeholder: "Add background info...",
   },
   {
     required: false,
     yKey: "finePrintText",
     label: "Fine Print Text",
     type: "rich-text",
+    placeholder: "Add fine print info...",
   },
 ];
 

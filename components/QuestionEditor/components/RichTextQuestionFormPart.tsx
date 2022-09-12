@@ -6,7 +6,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { QuestionFormPartProps } from "./QuestionFormPart";
+import {
+  GenericFormPartConfig,
+  QuestionFormPartProps,
+} from "./QuestionFormPart";
 import * as Y from "yjs";
 import { RichText } from "../../RichText";
 import { Awareness } from "y-protocols/awareness";
@@ -18,7 +21,7 @@ export const RichTextQuestionFormPart = ({
   config,
   doc,
   canEdit,
-}: QuestionFormPartProps): JSX.Element => {
+}: QuestionFormPartProps & { config: GenericFormPartConfig }): JSX.Element => {
   const [yType, setYType] = useState<Y.XmlFragment>();
 
   useEffect(() => {
@@ -35,7 +38,12 @@ export const RichTextQuestionFormPart = ({
       <Label label={config.label} name={config.label} />
       <div className={styles.richTextQuestionFormPartWrapper}>
         {awareness && yType ? (
-          <RichText readOnly={!canEdit} yType={yType} awareness={awareness} />
+          <RichText
+            readOnly={!canEdit}
+            yType={yType}
+            awareness={awareness}
+            placeholder={config.placeholder}
+          />
         ) : null}
       </div>
     </FormGroup>

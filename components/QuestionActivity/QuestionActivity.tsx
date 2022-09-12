@@ -97,6 +97,7 @@ export const QuestionActivity = ({
             </div>
             <RichText
               variant="comment"
+              placeholder="Write a message..."
               readOnly={isCommentPending}
               value={forceValue}
               onConfirm={async (commentText) => {

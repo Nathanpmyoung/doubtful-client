@@ -3,11 +3,12 @@ import { DateQuestionFormPart } from "./DateQuestionFormPart";
 import { MultiChoiceQuestionFormPart } from "./MultiChoiceQuestionFormPart";
 import { RichTextQuestionFormPart } from "./RichTextQuestionFormPart";
 
-interface GenericFormPartConfig {
+export interface GenericFormPartConfig {
   type: "date" | "rich-text";
   label: string;
   yKey: string;
   required: boolean;
+  placeholder?: string;
 }
 
 interface MultiChoiceOption {

@@ -101,19 +101,21 @@ export const QuestionActivity = ({
               readOnly={isCommentPending}
               value={forceValue}
               onConfirm={async (commentText) => {
-                try {
-                  setIsCommentPending(true);
-                  await submitComment({
-                    body: commentText,
-                    replyTo: replyToId,
-                  });
-                  setForceValue(" ");
-                  setTimeout(() => {
-                    setForceValue("");
-                  });
-                  setReplyToId(undefined);
-                } finally {
-                  setIsCommentPending(false);
+                if (commentText) {
+                  try {
+                    setIsCommentPending(true);
+                    await submitComment({
+                      body: commentText,
+                      replyTo: replyToId,
+                    });
+                    setForceValue(" ");
+                    setTimeout(() => {
+                      setForceValue("");
+                    });
+                    setReplyToId(undefined);
+                  } finally {
+                    setIsCommentPending(false);
+                  }
                 }
               }}
             />

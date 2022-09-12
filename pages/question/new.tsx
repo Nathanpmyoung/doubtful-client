@@ -9,7 +9,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { ironConfig } from "../api/_utils/ironConfig";
 import { config } from "../../config";
 import { QuestionEditor } from "../../components/QuestionEditor";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as Y from "yjs";
 import { api } from "../../lib/http";
 
@@ -31,7 +31,7 @@ export const NewQuestionPage: NextPage<QuestionProps> = ({
   user,
 }: QuestionProps) => {
   const [question, setQuestion] = useState<Partial<Question>>({});
-  const [yDoc] = useState(new Y.Doc({ gc: false }));
+  const yDocRef = useRef(new Y.Doc({ gc: false }));
   const router = useRouter();
   const canPublish = question.title && question.title.length > 5;
   const [isPublishPending, setIsPublishPending] = useState(false);
@@ -80,7 +80,7 @@ export const NewQuestionPage: NextPage<QuestionProps> = ({
             <section>
               <QuestionEditor
                 canEdit={true}
-                yDoc={yDoc}
+                yDocRef={yDocRef}
                 user={user}
                 onChange={setQuestion}
               />

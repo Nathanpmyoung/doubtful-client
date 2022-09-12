@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import { Question } from "../../interfaces";
 import * as Y from "yjs";
 import {
@@ -56,7 +56,7 @@ const questionFormPartConfig: QuestionFormPartConfig[] = [
 export interface QuestionEditorProps {
   question?: Question;
   canEdit: boolean;
-  yDoc: Y.Doc;
+  yDocRef: MutableRefObject<Y.Doc>;
   user?: any;
   onChange(question: Partial<Question>): void;
 }
@@ -66,7 +66,7 @@ const isBrowser = typeof window !== "undefined";
 export const QuestionEditor = ({
   question,
   user,
-  yDoc,
+  yDocRef,
   onChange,
 }: QuestionEditorProps): JSX.Element => {
   const subscribedDocIdRef = useRef<string>();
@@ -75,7 +75,6 @@ export const QuestionEditor = ({
   );
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [, setIsConnected] = useState(false);
-  const awarenessRef = useRef(new awarenessProtocol.Awareness(yDoc));
 
   const socket = useMemo(() => {
     if (isBrowser) {
@@ -124,28 +123,34 @@ export const QuestionEditor = ({
   useEffect(() => {
     const doEffect = async () => {
       if (isSubscribed && subscribedDocIdRef.current) {
+        setIsSubscribed(false);
         await wave!.unsubscribeFromDoc(subscribedDocIdRef.current);
         subscribedDocIdRef.current = undefined;
-        yDoc.destroy();
+        yDocRef.current = new Y.Doc({ gc: false });
+        console.log("reset yDoc");
       }
+      const awareness = new awarenessProtocol.Awareness(yDocRef.current);
       console.log("subscribe");
       await wave!.subscribeToDoc(
         question!.content!.id,
-        yDoc,
-        awarenessRef.current
+        yDocRef.current,
+        awareness
       );
       subscribedDocIdRef.current = question!.content!.id;
       setIsSubscribed(true);
     };
 
-    if (wave && yDoc && awarenessRef.current && question?.slug) {
+    if (wave && yDocRef.current && question?.slug) {
       doEffect();
     }
   }, [wave, question?.slug]);
 
   useEffect(() => {
     if (question?.content) {
-      Y.applyUpdate(yDoc, Uint8Array.from(question.content.content.data));
+      Y.applyUpdate(
+        yDocRef.current,
+        Uint8Array.from(question.content.content.data)
+      );
     }
   }, [question?.content]);
 
@@ -170,13 +175,13 @@ export const QuestionEditor = ({
         />
       </FormGroup>
 
-      {yDoc &&
+      {yDocRef.current &&
         (!question || isSubscribed) &&
         questionFormPartConfig.map((partConfig) => {
           return (
             <QuestionFormPart
               canEdit={isOwner}
-              doc={yDoc}
+              doc={yDocRef.current}
               config={partConfig}
               key={partConfig.yKey}
             />

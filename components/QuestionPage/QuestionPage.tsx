@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import { api } from "../../lib/http";
 import { QuestionRightPane } from "../QuestionRightPane/QuestionRightPane";
 import { QuestionHeader } from "../QuestionHeader/QuestionHeader";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as Y from "yjs";
 
 export interface QuestionProps {
@@ -20,10 +20,11 @@ export const QuestionPage: NextPage<QuestionProps> = ({
   question: _question,
 }: QuestionProps) => {
   const [question, setQuestion] = useState(_question);
-  const [yDoc] = useState(new Y.Doc({ gc: false }));
+  const yDocRef = useRef(new Y.Doc({ gc: false }));
   const router = useRouter();
 
   useEffect(() => {
+    console.log('new question')
     setQuestion(_question);
   }, [_question.id]);
 
@@ -97,7 +98,7 @@ export const QuestionPage: NextPage<QuestionProps> = ({
 
             <section>
               <QuestionEditor
-                yDoc={yDoc}
+                yDocRef={yDocRef}
                 question={question}
                 canEdit={true}
                 user={user}

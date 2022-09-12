@@ -58,7 +58,7 @@ export const NewQuestionPage: NextPage<QuestionProps> = ({
                   onClick={async () => {
                     setIsPublishPending(true);
                     try {
-                      const yDocContent = Y.encodeStateAsUpdate(yDoc);
+                      const yDocContent = Y.encodeStateAsUpdate(yDocRef.current);
                       const newQuestion: Question = await api
                         .url(`/question/new`)
                         .post({

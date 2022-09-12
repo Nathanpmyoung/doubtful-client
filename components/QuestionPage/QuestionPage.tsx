@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import { api } from "../../lib/http";
 import { QuestionRightPane } from "../QuestionRightPane/QuestionRightPane";
 import { QuestionHeader } from "../QuestionHeader/QuestionHeader";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as Y from "yjs";
 
 export interface QuestionProps {
@@ -22,6 +22,10 @@ export const QuestionPage: NextPage<QuestionProps> = ({
   const [question, setQuestion] = useState(_question);
   const [yDoc] = useState(new Y.Doc({ gc: false }));
   const router = useRouter();
+
+  useEffect(() => {
+    setQuestion(_question);
+  }, [_question.id]);
 
   const refetchQuestion = useCallback(async () => {
     const q: Question = await api

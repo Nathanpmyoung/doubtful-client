@@ -44,5 +44,10 @@ export const QuestionFormPart = (props: QuestionFormPartProps): JSX.Element => {
     return <DateQuestionFormPart {...props} />;
   }
 
-  return <RichTextQuestionFormPart {...props} />;
+  return (
+    <RichTextQuestionFormPart
+      {...props}
+      config={props.config as GenericFormPartConfig}
+    />
+  );
 };

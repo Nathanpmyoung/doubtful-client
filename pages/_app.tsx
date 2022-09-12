@@ -1,19 +1,22 @@
 import "../styles/globals.css";
+import LogRocket from "logrocket";
 import type { AppProps } from "next/app";
 import styles from "./styles.module.css";
 import { LeftNav } from "../components/LeftNav/LeftNav";
 import { useRouter } from "next/router";
-import { MobilePage } from "./mobile";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const user = (pageProps as any).user;
   const router = useRouter();
-  if (
-    typeof window !== "undefined" &&
-    window.innerWidth < 800 &&
-    !window.location.pathname.includes("/mobile")
-  ) {
-    router.replace("/mobile");
+  if (typeof window !== "undefined") {
+    if (
+      window.innerWidth < 800 &&
+      !window.location.pathname.includes("/mobile")
+    ) {
+      router.replace("/mobile");
+    } else {
+      LogRocket.init("eydrav/doubtful");
+    }
   }
   return (
     <main className={styles.pageWrapper}>

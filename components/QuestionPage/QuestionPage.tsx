@@ -24,7 +24,7 @@ export const QuestionPage: NextPage<QuestionProps> = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log('new question')
+    console.log("new question");
     setQuestion(_question);
   }, [_question.id]);
 
@@ -72,7 +72,7 @@ export const QuestionPage: NextPage<QuestionProps> = ({
                   </button>
                 </div>
               </div>
-            ) : (
+            ) : question.owner.email === user.email ? (
               <div className={styles.makeSuggestionWrapper}>
                 <div className={styles.makeSuggestion}>
                   <span>Editing</span>
@@ -92,6 +92,15 @@ export const QuestionPage: NextPage<QuestionProps> = ({
                   >
                     Propose Change
                   </button>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.makeSuggestionWrapper}>
+                <div className={styles.makeSuggestion}>
+                  <span>
+                    Viewing <strong>{question.owner.name}</strong>'s Proposed
+                    Changes
+                  </span>
                 </div>
               </div>
             )}

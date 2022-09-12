@@ -17,12 +17,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       ) {
         router.replace("/mobile");
       } else {
-        LogRocket.init("eydrav/doubtful");
-        if (user) {
-          LogRocket.identify(user.id, {
-            name: user.name,
-            email: user.email,
-          });
+        if (process.env.NODE_ENV === "production") {
+          LogRocket.init("eydrav/doubtful");
+          if (user) {
+            LogRocket.identify(user.id, {
+              name: user.name,
+              email: user.email,
+            });
+          }
         }
       }
     }

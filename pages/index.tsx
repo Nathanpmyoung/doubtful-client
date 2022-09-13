@@ -80,11 +80,12 @@ const promptsSampleData = [
 interface HomeProps {
   user: any;
   questions: Question[];
+  prompts: any[];
 }
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
-    const [user, questions] = await Promise.all([
+    const [user, questions, prompts] = await Promise.all([
       fetch(`${config.origin}/auth/me`, {
         headers: {
           authorization: `Bearer ${(req.session as any).access_token}`,
@@ -97,15 +98,22 @@ export const getServerSideProps = withIronSessionSsr(
           authorization: `Bearer ${(req.session as any).access_token}`,
         },
       }).then((res) => res.json()),
+      fetch(`${config.origin}/prompt/top`, {
+        headers: {
+          authorization: `Bearer ${(req.session as any).access_token}`,
+        },
+      }).then((res) => res.json()),
     ]);
 
-    return { props: { user, questions } };
+    return { props: { user, questions, prompts } };
   },
   ironConfig
 );
 
-const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
+const Home: NextPage<HomeProps> = ({ user, questions, prompts }: HomeProps) => {
   const router = useRouter();
+
+  console.log({ prompts });
 
   const [currentCreatorTab, setCurrentCreatorTab] = useState<
     "question" | "prompt"
@@ -177,6 +185,16 @@ const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
               ? "Write a rough question…"
               : "Write or search for prompts…"
           }
+          onBlur={async (ev: any) => {
+            if (ev.target.value.length < 3) return;
+            if (currentCreatorTab === "prompt") {
+              await api
+                .url(`/prompt/create`)
+                .post({ title: ev.target.value })
+                .json();
+              location.reload();
+            }
+          }}
         />
 
         <div className={styles.prompts}>

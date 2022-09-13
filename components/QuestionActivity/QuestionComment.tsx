@@ -21,7 +21,12 @@ export const QuestionComment = ({
         <img
           src={activity.actor.avatarUrl}
           alt={activity.actor.name}
-          style={{ width: "32px", borderRadius: "50%" }}
+          style={{
+            width: "32px",
+            height: "32px",
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
         />
       </div>
       <div style={{ width: "100%" }}>
@@ -34,7 +39,7 @@ export const QuestionComment = ({
             <span className={styles.relatedActivityContent}>
               {activity.relatedActivity.content.body
                 ? activity.relatedActivity.content.body
-                : 'an activity'}
+                : "an activity"}
             </span>
           </a>
         ) : null}

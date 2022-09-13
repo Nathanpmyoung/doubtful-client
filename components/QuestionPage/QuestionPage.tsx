@@ -48,62 +48,40 @@ export const QuestionPage: NextPage<QuestionProps> = ({
       <div className={styles.container}>
         <main className={styles.questionContainer}>
           <section className={styles.questionBody}>
-            {!question.base ? (
-              <div className={styles.makeSuggestionWrapper}>
-                <div className={styles.makeSuggestion}>
-                  <span>Got an idea?</span>
-                  <button
-                    className={styles.makeSuggestionButton}
-                    onClick={async () => {
-                      const branchName = prompt("Branch Name");
-                      if (branchName) {
-                        const branchSlug = branchName.trim().replace(/ /g, "-");
-                        const createdBranch: Question = await api
-                          .url(`/question/${question.slug}/branch/create`)
-                          .post({ branchSlug })
+            {question.base ? (
+              question.owner.email === user.email ? (
+                <div className={styles.makeSuggestionWrapper}>
+                  <div className={styles.makeSuggestion}>
+                    <span>Editing</span>
+                    <button
+                      className={styles.makeSuggestionButton}
+                      onClick={async () => {
+                        await api
+                          .url(
+                            `/question/${question.base?.slug}/branch/${question.branchName}/propose`
+                          )
+                          .post({
+                            summary: prompt("Briefly describe your changes..."),
+                          })
                           .json();
-                        router.push(
-                          `/question/${question.slug}/${createdBranch.branchName}`
-                        );
-                      }
-                    }}
-                  >
-                    Create Branch
-                  </button>
+                        router.push(`/question/${question.base?.slug}`);
+                      }}
+                    >
+                      Propose Change
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : question.owner.email === user.email ? (
-              <div className={styles.makeSuggestionWrapper}>
-                <div className={styles.makeSuggestion}>
-                  <span>Editing</span>
-                  <button
-                    className={styles.makeSuggestionButton}
-                    onClick={async () => {
-                      await api
-                        .url(
-                          `/question/${question.base?.slug}/branch/${question.branchName}/propose`
-                        )
-                        .post({
-                          summary: prompt("Briefly describe your changes..."),
-                        })
-                        .json();
-                      router.push(`/question/${question.base?.slug}`);
-                    }}
-                  >
-                    Propose Change
-                  </button>
+              ) : (
+                <div className={styles.makeSuggestionWrapper}>
+                  <div className={styles.makeSuggestion}>
+                    <span>
+                      Viewing <strong>{question.owner.name}</strong>'s Proposed
+                      Changes
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className={styles.makeSuggestionWrapper}>
-                <div className={styles.makeSuggestion}>
-                  <span>
-                    Viewing <strong>{question.owner.name}</strong>'s Proposed
-                    Changes
-                  </span>
-                </div>
-              </div>
-            )}
+              )
+            ) : null}
 
             <section>
               <QuestionEditor

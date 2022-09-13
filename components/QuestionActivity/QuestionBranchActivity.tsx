@@ -15,9 +15,11 @@ export const QuestionBranchActivity = ({
   activity,
   question,
   refetch,
+  user,
   setReplyTo,
 }: QuestionBranchActivityProps): JSX.Element => {
   const { suggestion, accept } = activity.content.branch;
+  const isOwner = question.owner.email === user.email;
   if (suggestion) {
     const { summary, branchSlug } = suggestion;
     return (
@@ -40,22 +42,32 @@ export const QuestionBranchActivity = ({
             <strong>{summary}</strong>
             <br />
             <br />
-            <Link href={`/question/${question.slug}/${branchSlug}`}>
-              View Changes
-            </Link>{" "}
-            <button
-              onClick={async () => {
-                await api
-                  .url(`/question/${question.slug}/branch/${branchSlug}/accept`)
-                  .post({})
-                  .json();
-                setTimeout(() => {
-                  refetch?.();
-                }, 100);
-              }}
-            >
-              Accept Changes
-            </button>
+            {isOwner ? (
+              <>
+                <Link href={`/question/${question.slug}/${branchSlug}`}>
+                  View Changes
+                </Link>{" "}
+                <button
+                  onClick={async (ev) => {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    await api
+                      .url(
+                        `/question/${question.slug}/branch/${branchSlug}/accept`
+                      )
+                      .post({})
+                      .json();
+                    setTimeout(() => {
+                      refetch?.();
+                    }, 100);
+                  }}
+                >
+                  Accept Changes
+                </button>
+              </>
+            ) : (
+              <small>Pending Review by Owner...</small>
+            )}
           </div>
           <a
             href="#"

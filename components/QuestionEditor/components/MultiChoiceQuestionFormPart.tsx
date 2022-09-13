@@ -1,8 +1,7 @@
-import { ChangeEventHandler, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormGroup } from "../../Form/FormGroup";
 import { Label } from "../../Form/Label";
 import { PillButton } from "../../Form/PillButton";
-import { getValueFromYDoc } from "./lib";
 import { MultiChoiceConfig, QuestionFormPartProps } from "./QuestionFormPart";
 
 export const MultiChoiceQuestionFormPart = ({

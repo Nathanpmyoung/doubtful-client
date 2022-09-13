@@ -1,0 +1,47 @@
+.navLinks {
+    height: 69px;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+    font-family: 'Inter', sans-serif;
+}
+
+.navItem {
+    margin-right: 16px;
+    padding: 6px 28.5px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.58);
+}
+
+.navItemActive {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.5);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.loginFloater {
+    padding: 8px 24px;
+    background: linear-gradient(93.74deg, #622F5B 9.47%, #7C3E97 100%);
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+}

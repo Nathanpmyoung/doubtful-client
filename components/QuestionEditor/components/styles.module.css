@@ -1,11 +1,11 @@
 .richTextQuestionFormPartWrapper {
     transition: 0.2s;
-    border: 2px solid rgba(0, 0, 0, 0.17);
+    border: 1px solid rgba(0, 0, 0, 0.17);
     border-radius: 4px;
 }
 
 .richTextQuestionFormPartWrapper:focus-within {
-    border: 2px solid #AC6DC9;
+    border: 1px solid #AC6DC9;
 }
 
 .richTextQuestionFormPartWrapper :global(.ProseMirror) {

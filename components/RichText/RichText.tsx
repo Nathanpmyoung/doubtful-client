@@ -13,6 +13,7 @@ import styles from "./styles.module.css";
 import * as Y from "yjs";
 import { Awareness } from "y-protocols/awareness";
 import { makeParser, makeSerializer } from "./markdown";
+import SendIcon from "public/icons/paper-airplane.svg";
 
 const isDescendant = (parent: Element, child: Element) => {
   if (parent === child) {
@@ -173,7 +174,9 @@ export const RichText: React.FC<RichTextProps> = ({
         <button
           onClick={() => onConfirm?.(state.current)}
           className={styles.sendButton}
-        ></button>
+        >
+          <SendIcon />
+        </button>
       ) : null}
     </div>
   );

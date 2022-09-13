@@ -8,15 +8,84 @@ import { withIronSessionSsr } from "iron-session/next";
 import { ironConfig } from "./api/_utils/ironConfig";
 import { useRouter } from "next/router";
 import { api } from "../lib/http";
+import cn from "classnames";
+import { useMemo, useState } from "react";
+import QuestionIcon from "public/icons/question.svg";
+import ChatIcon from "public/icons/chat-alt-2.svg";
+import { QuestionPreview } from "../components/QuestionPreview/QuestionPreview";
+
+const promptsSampleData = [
+  {
+    id: 1,
+    topic: "Tory leadership contest",
+    numOfQuestions: 1,
+  },
+  {
+    id: 2,
+    topic: "When will we have driverless cars?",
+    numOfQuestions: 6,
+  },
+  {
+    id: 3,
+    topic: "Will HS2 be a success?",
+    numOfQuestions: 1,
+  },
+  {
+    id: 4,
+    topic: "When is good AR coming?",
+    numOfQuestions: 2,
+  },
+  {
+    id: 5,
+    topic: "Will US gun violence get worse?",
+    numOfQuestions: 2,
+  },
+  {
+    id: 6,
+    topic: "Will we reach the 2° warming target?",
+    numOfQuestions: 1,
+  },
+  {
+    id: 7,
+    topic: "When will we have driverless cars?",
+    numOfQuestions: 1,
+  },
+  {
+    id: 8,
+    topic: "Will AI make truck driving obsolete",
+    numOfQuestions: 2,
+  },
+  {
+    id: 9,
+    topic: "Will US gun violence get worse?",
+    numOfQuestions: 1,
+  },
+  {
+    id: 10,
+    topic: "Will we reach the 2° warming target?",
+    numOfQuestions: 1,
+  },
+  {
+    id: 11,
+    topic: "Tory leadership contest",
+    numOfQuestions: 2,
+  },
+  {
+    id: 12,
+    topic: "Will Apple become a bank?",
+    numOfQuestions: 1,
+  },
+];
 
 interface HomeProps {
   user: any;
   questions: Question[];
+  prompts: any[];
 }
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
-    const [user, questions] = await Promise.all([
+    const [user, questions, prompts] = await Promise.all([
       fetch(`${config.origin}/auth/me`, {
         headers: {
           authorization: `Bearer ${(req.session as any).access_token}`,
@@ -29,18 +98,38 @@ export const getServerSideProps = withIronSessionSsr(
           authorization: `Bearer ${(req.session as any).access_token}`,
         },
       }).then((res) => res.json()),
+      fetch(`${config.origin}/prompt/top`, {
+        headers: {
+          authorization: `Bearer ${(req.session as any).access_token}`,
+        },
+      }).then((res) => res.json()),
     ]);
 
-    return { props: { user, questions } };
+    return { props: { user, questions, prompts } };
   },
   ironConfig
 );
 
-const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
+const Home: NextPage<HomeProps> = ({ user, questions, prompts }: HomeProps) => {
   const router = useRouter();
+
+  console.log({ prompts });
+
+  const [currentCreatorTab, setCurrentCreatorTab] = useState<
+    "question" | "prompt"
+  >("question");
+  const [isPromptsListOpened, setPromptsListOpened] = useState(false);
+
   if (user && !user.name) {
     router.push("/profile");
   }
+
+  const promptsList = useMemo(() => {
+    return isPromptsListOpened
+      ? promptsSampleData
+      : promptsSampleData.slice(0, 7);
+  }, [isPromptsListOpened]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -49,76 +138,115 @@ const Home: NextPage<HomeProps> = ({ user, questions }: HomeProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Better questions ➡️ better forecasting</h1>
-        <h2 className={styles.subTitle}>
-          Help us craft better questions for the world’s forecasting platforms
-        </h2>
+      <main className={cn(styles.main, { [styles.mainAnon]: !user })}>
+        {!user ? (
+          <>
+            <h1 className={styles.title}>
+              Better questions ➡️ better forecasting
+            </h1>
+            <h2 className={styles.subTitle}>
+              Help us craft better questions for the world’s forecasting
+              platforms
+            </h2>
+          </>
+        ) : null}
 
-        <section className={styles.questionsWrapper}>
-          {questions
-            .sort((a, b) => (a.score < b.score ? 1 : -1))
-            .map((question) => {
+        <div className={styles.creationTabsWrapper}>
+          <button
+            className={cn(styles.creationTab, {
+              [styles.creationTabActive]: currentCreatorTab === "question",
+            })}
+            onClick={() => {
+              setCurrentCreatorTab("question");
+              setPromptsListOpened(false);
+            }}
+          >
+            <QuestionIcon />
+            Question
+          </button>
+          <button
+            className={cn(styles.creationTab, {
+              [styles.creationTabActive]: currentCreatorTab === "prompt",
+            })}
+            onClick={() => {
+              setCurrentCreatorTab("prompt");
+              setPromptsListOpened(true);
+            }}
+          >
+            <ChatIcon />
+            Prompt
+          </button>
+        </div>
+
+        <input
+          className={styles.creationInput}
+          placeholder={
+            currentCreatorTab === "question"
+              ? "Write a rough question…"
+              : "Write or search for prompts…"
+          }
+          onBlur={async (ev: any) => {
+            if (ev.target.value.length < 3) return;
+            if (currentCreatorTab === "prompt") {
+              await api
+                .url(`/prompt/create`)
+                .post({ title: ev.target.value })
+                .json();
+              location.reload();
+            }
+          }}
+        />
+
+        <div className={styles.prompts}>
+          <div className={styles.categoryTitle}>Prompts</div>
+          <div className={styles.promptsList}>
+            {promptsList.map((prompt) => {
               return (
-                <a
-                  key={question.id}
-                  href={`/question/${question.slug}`}
-                  className={styles.question}
+                <div
+                  key={prompt.id}
+                  className={styles.promptItem}
+                  style={
+                    prompt.numOfQuestions > 1
+                      ? { padding: "4px 4px 4px 12px" }
+                      : { padding: "6px 12px" }
+                  }
                 >
-                  <div className={styles.rankBox}>
-                    <button
-                      onClick={async (ev) => {
-                        ev.stopPropagation();
-                        ev.preventDefault();
-                        await api
-                          .url(`/question/${question.slug}/rank/up`)
-                          .post({});
-                        setTimeout(() => {
-                          location.reload();
-                        }, 100);
-                      }}
-                    >
-                      ⬆️
-                    </button>
-                    <span>{question.score}</span>
-                    <button
-                      onClick={async (ev) => {
-                        ev.stopPropagation();
-                        ev.preventDefault();
-                        await api
-                          .url(`/question/${question.slug}/rank/down`)
-                          .post({})
-                          .json();
-                        setTimeout(() => {
-                          location.reload();
-                        }, 100);
-                      }}
-                    >
-                      ⬇️
-                    </button>
-                  </div>
-                  <div>
-                    <h2 className={styles.questionTitle}>{question.title}</h2>
-                    <small className={styles.questionSubTitle}>
-                      <img
-                        src={question.owner.avatarUrl}
-                        className={styles.questionOwnerImg}
-                      />
-                      {question.owner.name} · {question.activity.length}{" "}
-                      Comments ·{" "}
-                      {formatDistance(
-                        new Date(question.createdAt),
-                        new Date(),
-                        {
-                          addSuffix: true,
-                        }
-                      )}
-                    </small>
-                  </div>
-                </a>
+                  {prompt.topic}
+                  {prompt.numOfQuestions > 1 ? (
+                    <span className={styles.promptQuestions}>
+                      {prompt.numOfQuestions}
+                    </span>
+                  ) : null}
+                </div>
               );
             })}
-        </section>
+            {currentCreatorTab !== "prompt" && (
+              <button
+                style={{ padding: "6px 12px" }}
+                className={styles.promptItem}
+                onClick={() => setPromptsListOpened(!isPromptsListOpened)}
+              >
+                {isPromptsListOpened ? <>...Hide</> : <>More...</>}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {currentCreatorTab === "question" ? (
+          <section className={styles.questionsWrapper}>
+            <div className={styles.questionsHeader}>
+              <div className={styles.categoryTitle}>Open for comment</div>
+              <div className={styles.sortedBy}>Top</div>
+            </div>
+            {questions
+              .sort((a, b) => (a.score < b.score ? 1 : -1))
+              .map((question) => {
+                return (
+                  <QuestionPreview key={question.id} question={question} />
+                );
+              })}
+          </section>
+        ) : null}
       </main>
     </div>
   );

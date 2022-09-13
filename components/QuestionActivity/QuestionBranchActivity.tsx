@@ -26,9 +26,9 @@ export const QuestionBranchActivity = ({
       <div className={styles.questionComment} id={`activity-${activity.id}`}>
         <div className={styles.avatarWrapper}>
           <img
+            className={styles.avatar}
             src={activity.actor.avatarUrl}
             alt={activity.actor.name}
-            style={{ width: "32px", borderRadius: "50%" }}
           />
         </div>
         <div style={{ width: "100%" }}>
@@ -88,9 +88,9 @@ export const QuestionBranchActivity = ({
       <div className={styles.questionComment}>
         <div className={styles.avatarWrapper}>
           <img
+            className={styles.avatar}
             src={activity.actor.avatarUrl}
             alt={activity.actor.name}
-            style={{ width: "32px", borderRadius: "50%" }}
           />
         </div>
         <div style={{ width: "100%" }}>

@@ -6,6 +6,7 @@ import { RichText } from "../RichText";
 import { QuestionBranchActivity } from "./QuestionBranchActivity";
 import { QuestionComment } from "./QuestionComment";
 import styles from "./styles.module.css";
+import CancelIcon from "public/icons/cross.svg";
 
 export interface QuestionActivityProps {
   question: Question;
@@ -95,14 +96,14 @@ export const QuestionActivity = ({
               className={styles.cancelReplyTo}
               onClick={() => setReplyToId(undefined)}
             >
-              X
+              <CancelIcon />
             </button>
           </div>
         ) : null}
         {user ? (
           <div className={styles.commentControlInner}>
             <div>
-              <img src={user.avatarUrl} />
+              <img src={user.avatarUrl} className={styles.avatar} />
             </div>
             <RichText
               variant="comment"

@@ -5,10 +5,15 @@ import styles from "./styles.module.css";
 import { LeftNav } from "../components/LeftNav/LeftNav";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Link from "next/link";
+import cn from "classnames";
+import { TopNav } from "../components/TopNav/TopNav";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const user = (pageProps as any).user;
+
   const router = useRouter();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (
@@ -29,15 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       }
     }
   }, []);
+
   return (
-    <main className={styles.pageWrapper}>
-      {user ? (
-        <LeftNav user={user} />
-      ) : (
-        <a href="/login" className={styles.loginFloater}>
-          Sign Up / Log In
-        </a>
-      )}
+    <main
+      className={cn(styles.pageWrapper, { [styles.pageWithSidebar]: user })}
+    >
+      {user ? <LeftNav user={user} /> : <TopNav />}
       <Component {...pageProps} />
     </main>
   );

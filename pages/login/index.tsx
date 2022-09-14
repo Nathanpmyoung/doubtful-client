@@ -34,7 +34,7 @@ const Home: NextPage<LoginProps> = ({ user }: LoginProps) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Go on. Log in then...</h1>
+        <h1 className={styles.title}>Welcome! We need you to login. Don't clink the link in the email, copy the code back here.</h1>
 
         <section>
           <form
